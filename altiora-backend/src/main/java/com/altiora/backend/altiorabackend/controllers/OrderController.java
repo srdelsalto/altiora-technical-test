@@ -29,4 +29,19 @@ public class OrderController
     public ResponseEntity<List<OrderModel>> getAllOrders(){
         return new ResponseEntity<>(orderService.getAllOrders(),HttpStatus.OK);
     }
+
+    @PutMapping("/{orderId}")
+    public ResponseEntity<OrderModel> updateOrder(
+            @PathVariable Long orderId,
+            @RequestBody OrderRequest orderRequest) {
+        OrderModel updatedOrder = orderService.updateOrder(orderId, orderRequest);
+        return ResponseEntity.ok(updatedOrder);
+    }
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
+        orderService.deleteOrder(orderId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

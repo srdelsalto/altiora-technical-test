@@ -19,4 +19,21 @@ public class ArticleService {
     public List<ArticleModel> listArticles() {
         return articleRepository.findAll();
     }
+
+    public ArticleModel getArticleById(String id) {
+        return articleRepository.findById(id).orElse(null);
+    }
+
+    public ArticleModel updateArticle(ArticleModel articleModel) {
+        ArticleModel article = articleRepository.findById(articleModel.getId())
+                .orElseThrow(() -> new RuntimeException("Artícle not found!"));
+
+        article.setName(articleModel.getName());
+        article.setUnitaryPrice(articleModel.getUnitaryPrice());
+        return articleRepository.save(article);
+    }
+
+    public void deleteArticle(String articleId) {
+        articleRepository.deleteById(articleId);
+    }
 }

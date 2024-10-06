@@ -50,4 +50,39 @@ public class OrderService {
 
         return orderRepository.save(newOrderModel);
     }
+
+    public OrderModel updateOrder(Long orderId, OrderRequest orderRequest) {
+        // Buscar la orden existente por ID
+        OrderModel existingOrder = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+
+        // Actualizar cliente
+        ClientModel client = clientRepository.findById(orderRequest.getClientId())
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        existingOrder.setClient(client);
+
+        // Actualizar artículos
+        List<ArticleModel> articles = articleRepository.findAllById(orderRequest.getArticleIds());
+        existingOrder.setArticles(articles);
+
+        // Actualizar fecha si se proporciona
+        if (orderRequest.getDate() != null) {
+            existingOrder.setDate(orderRequest.getDate());
+        }
+
+        // Asignar la fecha actual si no se proporciona y si no hay fecha existente
+        if (existingOrder.getDate() == null) {
+            existingOrder.setDate(LocalDate.now());
+        }
+
+        // Guardar la orden actualizada en la base de datos
+        OrderModel updatedOrderModel = orderRepository.save(existingOrder);
+
+        return updatedOrderModel;
+    }
+
+    public void deleteOrder(Long orderId) {
+        orderRepository.deleteById(orderId);
+    }
+
 }
