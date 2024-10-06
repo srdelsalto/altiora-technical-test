@@ -37,6 +37,7 @@ Se debe tomar en cuenta que en nuestro backend es necesario configurar nuestra b
 spring.datasource.url=jdbc:postgresql://localhost:5432/altioracorp # Cambiar por la url de la base de datos
 spring.datasource.username=postgres # Cambiar por el usuario de la base de datos
 spring.datasource.password=Santyr5442# # Cambiar por la contraseña de la base de datos
+```	
 
 ## Valor Extra en Backend
 Se ha creado documentación de la API con Swagger, para acceder a ella se debe ingresar a la siguiente URL: `http://localhost:8080` (Que sería el puerto por defecto en nuestra app) o ingresar directamente a `http://localhost:8080/v2/api-docs` para ver la documentación en formato JSON.
